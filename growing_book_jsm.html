@@ -3,45 +3,35 @@
   <head>
     <title>Growing a book in the open</title>
     <meta charset="utf-8">
-    <meta name="author" content="Julia Silge" />
+    <meta name="author" content="Julia Silge | JSM 2018 | 30 July 2018" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
-    <link href="libs/remark-css/rladies.css" rel="stylesheet" />
     <link href="libs/remark-css/robot-fonts.css" rel="stylesheet" />
-    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
-    <script src="libs/jquery/jquery.min.js"></script>
-    <link href="libs/leaflet/leaflet.css" rel="stylesheet" />
-    <script src="libs/leaflet/leaflet.js"></script>
-    <link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
-    <script src="libs/Proj4Leaflet/proj4-compressed.js"></script>
-    <script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
-    <link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
-    <script src="libs/leaflet-binding/leaflet.js"></script>
-    <link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
-    <script src="libs/datatables-binding/datatables.js"></script>
-    <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
-    <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
-    <link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
-    <script src="libs/crosstalk/js/crosstalk.min.js"></script>
     <script src="https://use.fontawesome.com/5235085b15.js"></script>
+    <link rel="stylesheet" href="css/growing.css" type="text/css" />
+    <link rel="stylesheet" href="css/tidytext.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
 # Growing a book in the open
-## from blog post to O’Reilly paperback
-### Julia Silge
-### 2018/07/30
+## <br><br><br><br><br><br><br>from blog post to O’Reilly paperback
+### Julia Silge | JSM 2018 | 30 July 2018
 
 ---
 
 
 
 
-class: inverse, left, middle
+layout: true
+  
+&lt;div class="my-footer"&gt;&lt;span&gt;bit.ly/silge-jsm-book&lt;/span&gt;&lt;/div&gt; 
 
-# Keep in touch
+---
+
+class: inverse, right, middle
+
+# Find me at...
 
 &lt;a href="http://twitter.com/juliasilge"&gt;&lt;i class="fa fa-twitter fa-fw"&gt;&lt;/i&gt;&amp;nbsp; @juliasilge&lt;/a&gt;&lt;br&gt;
 &lt;a href="http://github.com/juliasilge"&gt;&lt;i class="fa fa-github fa-fw"&gt;&lt;/i&gt;&amp;nbsp; @juliasilge&lt;/a&gt;&lt;br&gt;
@@ -51,11 +41,73 @@ class: inverse, left, middle
 
 ---
 
-background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg)
+background-image: url("https://media.giphy.com/media/lWsV8EfJJuF1u/giphy.gif")
+background-position: 50% 50%
 
-???
+# Who am I?
 
-Image credit: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sharingan_triple.svg)
+---
+
+class: inverse
+
+# In early 2016...
+
+- I was interested in this so-called "data science"
+
+--
+
+- I was pretty sure no one would hire me
+
+--
+
+- I needed a ✨portfolio✨
+
+---
+
+background-image: url("https://media.giphy.com/media/4FgvzqQXhG3eM/giphy.gif")
+background-size: 450px
+background-position: 50% 50%
+
+# Write what you know
+
+---
+
+class: center, middle
+
+background-image: url("images/blog_screenshot.png")
+
+---
+
+background-image: url(images/austen_heatmap.png)
+background-size: 900px
+background-position: 50% 50%
+
+# Text mining and Jane Austen
+
+---
+
+class: inverse, center, middle
+
+# In July 2017...
+
+---
+
+class:center, middle
+
+background-image: url(images/cover.png)
+background-size: 450px
+
+---
+
+class: center, middle
+
+background-image: url(images/tidytext.png)
+background-size: 500px
+
+---
+class:center
+
+background-image: url(images/tidytext.png)
 
 ---
 class: center, middle
@@ -332,115 +384,6 @@ knitr::kable(head(iris), format = 'html')
 
 ---
 
-# HTML Widgets
-
-I have not thoroughly tested HTML widgets against **xaringan**. Some may work well, and some may not. It is a little tricky.
-
-Similarly, the Shiny mode (`runtime: shiny`) does not work. I might get these issues fixed in the future, but these are not of high priority to me. I never turn my presentation into a Shiny app. When I need to demonstrate more complicated examples, I just launch them separately. It is convenient to share slides with other people when they are plain HTML/JS applications.
-
-See the next page for two HTML widgets.
-
----
-
-
-```r
-library(leaflet)
-leaflet() %&gt;% addTiles() %&gt;% setView(-93.65, 42.0285, zoom = 17)
-```
-
-<div id="htmlwidget-b5720db6548153413a85" style="width:100%;height:432px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b5720db6548153413a85">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[42.0285,-93.65],17,[]]},"evals":[],"jsHooks":[]}</script>
-
----
-
-
-```r
-DT::datatable(
-  head(iris, 10),
-  fillContainer = FALSE, options = list(pageLength = 8)
-)
-```
-
-<div id="htmlwidget-b1462a70c248b782b190" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b1462a70c248b782b190">{"x":{"filter":"none","fillContainer":false,"data":[["1","2","3","4","5","6","7","8","9","10"],[5.1,4.9,4.7,4.6,5,5.4,4.6,5,4.4,4.9],[3.5,3,3.2,3.1,3.6,3.9,3.4,3.4,2.9,3.1],[1.4,1.4,1.3,1.5,1.4,1.7,1.4,1.5,1.4,1.5],[0.2,0.2,0.2,0.2,0.2,0.4,0.3,0.2,0.2,0.1],["setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Sepal.Length<\/th>\n      <th>Sepal.Width<\/th>\n      <th>Petal.Length<\/th>\n      <th>Petal.Width<\/th>\n      <th>Species<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
-
----
-
-# Some Tips
-
-- When you use the "Infinite Moon Reader" addin in RStudio, your R session will be blocked by default. You can click the red button on the right of the console to stop serving the slides, or use the _daemonized_ mode so that it does not block your R session. To do the latter, you can set the option
-
-    ```r
-    options(servr.daemon = TRUE)
-    ```
-    
-    in your current R session, or in `~/.Rprofile` so that it is applied to all future R sessions. I do the latter by myself.
-    
-    To know more about the web server, see the [**servr**](https://github.com/yihui/servr) package.
-
---
-
-- Do not forget to try the `yolo` option of `xaringan::moon_reader`.
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        yolo: true
-    ```
-
----
-
-# Some Tips
-
-- Slides can be automatically played if you set the `autoplay` option under `nature`, e.g. go to the next slide every 30 seconds in a lightning talk:
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        nature:
-          autoplay: 30000
-    ```
-
---
-
-- A countdown timer can be added to every page of the slides using the `countdown` option under `nature`, e.g. if you want to spend one minute on every page when you give the talk, you can set:
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        nature:
-          countdown: 60000
-    ```
-
-    Then you will see a timer counting down from `01:00`, to `00:59`, `00:58`, ... When the time is out, the timer will continue but the time turns red.
-    
----
-
-# Some Tips
-
-- The title slide is created automatically by **xaringan**, but it is just another remark.js slide added before your other slides.
-
-    The title slide is set to `class: center, middle, inverse, title-slide` by default. You can change the classes applied to the title slide with the `titleSlideClass` option of `nature` (`title-slide` is always applied).
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        nature:
-          titleSlideClass: [top, left, inverse]
-    ```
-    
---
-
-- If you'd like to create your own title slide, disable **xaringan**'s title slide with the `seal = FALSE` option of `moon_reader`.
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        seal: false
-    ```
-
----
-
 # Some Tips
 
 - There are several ways to build incremental slides. See [this presentation](https://slides.yihui.name/xaringan/incremental.html) for examples.
@@ -688,36 +631,6 @@ I think a presentation is basically a way to communicate insights to the audienc
 
 ---
 
-# Naruto terminology
-
-The **xaringan** package borrowed a few terms from Naruto, such as
-
-- [Sharingan](http://naruto.wikia.com/wiki/Sharingan) (写輪眼; the package name)
-
-- The [moon reader](http://naruto.wikia.com/wiki/Moon_Reader) (月読; an attractive R Markdown output format)
-
-- [Chakra](http://naruto.wikia.com/wiki/Chakra) (查克拉; the path to the remark.js library, which is the power to drive the presentation)
-
-- [Nature transformation](http://naruto.wikia.com/wiki/Nature_Transformation) (性質変化; transform the chakra by setting different options)
-
-- The [infinite moon reader](http://naruto.wikia.com/wiki/Infinite_Tsukuyomi) (無限月読; start a local web server to continuously serve your slides)
-
-- The [summoning technique](http://naruto.wikia.com/wiki/Summoning_Technique) (download remark.js from the web)
-
-You can click the links to know more about them if you want. The jutsu "Moon Reader" may seem a little evil, but that does not mean your slides are evil.
-
----
-
-class: center
-
-# Hand seals (印)
-
-Press `h` or `?` to see the possible ninjutsu you can use in remark.js.
-
-![](https://upload.wikimedia.org/wikipedia/commons/7/7e/Mudra-Naruto-KageBunshin.svg)
-
----
-
 class: inverse, left, middle
 
 # Thanks!
@@ -728,7 +641,7 @@ class: inverse, left, middle
 &lt;a href="https://tidytextmining.com"&gt;&lt;i class="fa fa-book fa-fw"&gt;&lt;/i&gt;&amp;nbsp; tidytextmining.com&lt;/a&gt;&lt;br&gt;
 &lt;a href="mailto:julia.silge@gmail.com"&gt;&lt;i class="fa fa-paper-plane fa-fw"&gt;&lt;/i&gt;&amp;nbsp; julia.silge@gmail.com&lt;/a&gt;
 
-Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+Slides created with the R package [**xaringan**](https://github.com/yihui/xaringan).
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({

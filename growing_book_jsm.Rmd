@@ -1,11 +1,10 @@
 ---
 title: "Growing a book in the open"
-subtitle: "from blog post to O'Reilly paperback"
-author: "Julia Silge"
-date: "2018/07/30"
+subtitle: "<br><br><br><br><br><br><br>from blog post to O'Reilly paperback"
+author: "Julia Silge | JSM 2018 | 30 July 2018"
 output:
   xaringan::moon_reader:
-    css: ["default", "rladies", "robot-fonts"]
+    css: ["default", "robot-fonts", "css/growing.css", "css/tidytext.css"]
     lib_dir: libs
     nature:
       highlightStyle: github
@@ -19,9 +18,15 @@ output:
 options(htmltools.dir.version = FALSE)
 ```
 
-class: inverse, left, middle
+layout: true
+  
+<div class="my-footer"><span>bit.ly/silge-jsm-book</span></div> 
 
-# Keep in touch
+---
+
+class: inverse, right, middle
+
+# Find me at...
 
 <a href="http://twitter.com/juliasilge"><i class="fa fa-twitter fa-fw"></i>&nbsp; @juliasilge</a><br>
 <a href="http://github.com/juliasilge"><i class="fa fa-github fa-fw"></i>&nbsp; @juliasilge</a><br>
@@ -31,11 +36,73 @@ class: inverse, left, middle
 
 ---
 
-background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg)
+background-image: url("https://media.giphy.com/media/lWsV8EfJJuF1u/giphy.gif")
+background-position: 50% 50%
 
-???
+# Who am I?
 
-Image credit: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sharingan_triple.svg)
+---
+
+class: inverse
+
+# In early 2016...
+
+- I was interested in this so-called "data science"
+
+--
+
+- I was pretty sure no one would hire me
+
+--
+
+- I needed a `r emo::ji("sparkles")`portfolio`r emo::ji("sparkles")`
+
+---
+
+background-image: url("https://media.giphy.com/media/4FgvzqQXhG3eM/giphy.gif")
+background-size: 450px
+background-position: 50% 50%
+
+# Write what you know
+
+---
+
+class: center, middle
+
+background-image: url("images/blog_screenshot.png")
+
+---
+
+background-image: url(images/austen_heatmap.png)
+background-size: 900px
+background-position: 50% 50%
+
+# Text mining and Jane Austen
+
+---
+
+class: inverse, center, middle
+
+# In July 2017...
+
+---
+
+class:center, middle
+
+background-image: url(images/cover.png)
+background-size: 450px
+
+---
+
+class: center, middle
+
+background-image: url(images/tidytext.png)
+background-size: 500px
+
+---
+class:center
+
+background-image: url(images/tidytext.png)
 
 ---
 class: center, middle
@@ -234,107 +301,6 @@ If you want to generate a table, make sure it is in the HTML format (instead of 
 ```{r}
 knitr::kable(head(iris), format = 'html')
 ```
-
----
-
-# HTML Widgets
-
-I have not thoroughly tested HTML widgets against **xaringan**. Some may work well, and some may not. It is a little tricky.
-
-Similarly, the Shiny mode (`runtime: shiny`) does not work. I might get these issues fixed in the future, but these are not of high priority to me. I never turn my presentation into a Shiny app. When I need to demonstrate more complicated examples, I just launch them separately. It is convenient to share slides with other people when they are plain HTML/JS applications.
-
-See the next page for two HTML widgets.
-
----
-
-```{r out.width='100%', fig.height=6, eval=require('leaflet')}
-library(leaflet)
-leaflet() %>% addTiles() %>% setView(-93.65, 42.0285, zoom = 17)
-```
-
----
-
-```{r eval=require('DT'), tidy=FALSE}
-DT::datatable(
-  head(iris, 10),
-  fillContainer = FALSE, options = list(pageLength = 8)
-)
-```
-
----
-
-# Some Tips
-
-- When you use the "Infinite Moon Reader" addin in RStudio, your R session will be blocked by default. You can click the red button on the right of the console to stop serving the slides, or use the _daemonized_ mode so that it does not block your R session. To do the latter, you can set the option
-
-    ```r
-    options(servr.daemon = TRUE)
-    ```
-    
-    in your current R session, or in `~/.Rprofile` so that it is applied to all future R sessions. I do the latter by myself.
-    
-    To know more about the web server, see the [**servr**](https://github.com/yihui/servr) package.
-
---
-
-- Do not forget to try the `yolo` option of `xaringan::moon_reader`.
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        yolo: true
-    ```
-
----
-
-# Some Tips
-
-- Slides can be automatically played if you set the `autoplay` option under `nature`, e.g. go to the next slide every 30 seconds in a lightning talk:
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        nature:
-          autoplay: 30000
-    ```
-
---
-
-- A countdown timer can be added to every page of the slides using the `countdown` option under `nature`, e.g. if you want to spend one minute on every page when you give the talk, you can set:
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        nature:
-          countdown: 60000
-    ```
-
-    Then you will see a timer counting down from `01:00`, to `00:59`, `00:58`, ... When the time is out, the timer will continue but the time turns red.
-    
----
-
-# Some Tips
-
-- The title slide is created automatically by **xaringan**, but it is just another remark.js slide added before your other slides.
-
-    The title slide is set to `class: center, middle, inverse, title-slide` by default. You can change the classes applied to the title slide with the `titleSlideClass` option of `nature` (`title-slide` is always applied).
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        nature:
-          titleSlideClass: [top, left, inverse]
-    ```
-    
---
-
-- If you'd like to create your own title slide, disable **xaringan**'s title slide with the `seal = FALSE` option of `moon_reader`.
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        seal: false
-    ```
 
 ---
 
@@ -568,36 +534,6 @@ I think a presentation is basically a way to communicate insights to the audienc
 
 ---
 
-# Naruto terminology
-
-The **xaringan** package borrowed a few terms from Naruto, such as
-
-- [Sharingan](http://naruto.wikia.com/wiki/Sharingan) (写輪眼; the package name)
-
-- The [moon reader](http://naruto.wikia.com/wiki/Moon_Reader) (月読; an attractive R Markdown output format)
-
-- [Chakra](http://naruto.wikia.com/wiki/Chakra) (查克拉; the path to the remark.js library, which is the power to drive the presentation)
-
-- [Nature transformation](http://naruto.wikia.com/wiki/Nature_Transformation) (性質変化; transform the chakra by setting different options)
-
-- The [infinite moon reader](http://naruto.wikia.com/wiki/Infinite_Tsukuyomi) (無限月読; start a local web server to continuously serve your slides)
-
-- The [summoning technique](http://naruto.wikia.com/wiki/Summoning_Technique) (download remark.js from the web)
-
-You can click the links to know more about them if you want. The jutsu "Moon Reader" may seem a little evil, but that does not mean your slides are evil.
-
----
-
-class: center
-
-# Hand seals (印)
-
-Press `h` or `?` to see the possible ninjutsu you can use in remark.js.
-
-![](https://upload.wikimedia.org/wikipedia/commons/7/7e/Mudra-Naruto-KageBunshin.svg)
-
----
-
 class: inverse, left, middle
 
 # Thanks!
@@ -608,6 +544,6 @@ class: inverse, left, middle
 <a href="https://tidytextmining.com"><i class="fa fa-book fa-fw"></i>&nbsp; tidytextmining.com</a><br>
 <a href="mailto:julia.silge@gmail.com"><i class="fa fa-paper-plane fa-fw"></i>&nbsp; julia.silge@gmail.com</a>
 
-Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+Slides created with the R package [**xaringan**](https://github.com/yihui/xaringan).
 
 
