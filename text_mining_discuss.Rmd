@@ -1,6 +1,6 @@
 ---
-title: "Which session should this go to?"
-subtitle: "<br><br><br><br><br><br>text mining and modeling for conference abstracts"
+title: "Where does this abstract belong?"
+subtitle: "<br><br><br><br>text mining and modeling for conference abstracts"
 author: "Julia Silge | JSM 2018 | 29 July 2018"
 output:
   xaringan::moon_reader:
@@ -17,6 +17,7 @@ output:
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 library(tidyverse)
+library(janeaustenr)
 library(knitr)
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
                       dpi = 300, cache.lazy = FALSE,
@@ -51,121 +52,21 @@ background-position: 50% 50%
 
 class: inverse
 
-# In early 2016...
+# Text in the real world
 
 --
 
-- I was interested in this so-called "data science"
+- Text data is increasingly important `r emo::ji("books")`
 
 --
 
-- I was pretty sure no one would hire me
-
---
-
-- I needed a `r emo::ji("sparkles")`portfolio`r emo::ji("sparkles")`
+- NLP training is scarce on the ground `r emo::ji("scream")`
 
 ---
 
-background-image: url("https://media.giphy.com/media/4FgvzqQXhG3eM/giphy.gif")
-background-size: 450px
+background-image: url("https://media.giphy.com/media/l4JyY6IdblsismaeA/giphy.gif")
 background-position: 50% 50%
-
-# Write what you know
-
----
-
-class: center, middle
-
-background-image: url("images/blog_screenshot.png")
-
----
-class: left
-
-background-image: url(images/austen_heatmap.png)
-background-size: 900px
-background-position: 50% 50%
-
-# Text mining and Jane Austen
-
----
-
-class: inverse, center, middle
-
-# In July 2017...
-
----
-
-class:center, middle
-
-background-image: url(images/cover.png)
-background-size: 450px
-
----
-
-# To learn more...
-
-- Check out [tidytextmining.com](https://www.tidytextmining.com/) `r emo::ji("tada")`
-- Come to our Session 214 tomorrow (["Academic Publication Is Dead, Long Live Academic Publication"](https://ww2.amstat.org/meetings/jsm/2018/onlineprogram/ActivityDetails.cfm?SessionID=215035))
-- I'll be presenting on [Growing a Book in the Open: From Blog Post to O'Reilly Paperback](https://ww2.amstat.org/meetings/jsm/2018/onlineprogram/AbstractDetails.cfm?abstractid=326918)
-
----
-
-class:center, middle
-
-background-image: url(images/ropensci_tweet.png)
-background-size: 600px
-
----
-
-# Unnest tokens to tidy text
-
-```{r}
-library(tidytext)
-
-tidy_books <- janeaustenr::austen_books() %>%
-  unnest_tokens(word, text) 
-
-tidy_books %>%
-  anti_join(stop_words) %>%
-  count(word, sort = TRUE)
-```
----
-
-# Tidy a document-term matrix
-
-```{r echo=FALSE}
-library(tm)
-data("AssociatedPress", package = "topicmodels")
-```
-
-
-```{r}
-comparison <- tidy(AssociatedPress) %>%
-  count(word = term) %>%
-  rename(AP = n) %>%
-  inner_join(count(tidy_books, word)) %>%
-  rename(Austen = n) %>%
-  mutate(AP = AP / sum(AP),
-         Austen = Austen / sum(Austen))
-
-comparison
-```
-
----
-
-```{r, echo=FALSE, dpi=300, fig.height=6}
-comparison %>%
-  anti_join(get_stopwords()) %>%
-  ggplot(aes(AP, Austen)) +
-  geom_point(alpha = 0.5) +
-  geom_text(aes(label = word), check_overlap = TRUE,
-            vjust = 1, hjust = 1, family = "RobotoCondensed-Regular") +
-  scale_x_log10(labels = scales::percent_format()) +
-  scale_y_log10(labels = scales::percent_format()) +
-  geom_abline(color = "red")
-```
-
+background-size: 500px
 
 ---
 
@@ -183,191 +84,238 @@ background-size: 900px
 
 ---
 
-# Growing a book in the open
+class:center, middle
 
-- **March 2016** initial blog post
-
-- **April 2016** rOpenSci unconf, the beginning of tidytext, tidytext on CRAN
-
----
-
-background-image: url("https://media.giphy.com/media/iSrYjghqHhRJu/giphy.gif")
-background-size: 500px
-background-position: 50% 50%
-
-# Blogging
+background-image: url(images/cover.png)
+background-size: 450px
 
 ---
 
-# Blogging
+# To learn more...
 
-- Nobody is going to stop you from blogging about data science and/or statistics 
+- Check out `r emo::ji("sparkles")`[tidytextmining.com](https://www.tidytextmining.com/)`r emo::ji("sparkles")`
 
----
+- Come to our Session 214 tomorrow (["Academic Publication Is Dead, Long Live Academic Publication"](https://ww2.amstat.org/meetings/jsm/2018/onlineprogram/ActivityDetails.cfm?SessionID=215035))
 
-background-image: url("https://media.giphy.com/media/hpEzeWC2Pbrag/giphy.gif")
-background-size: 400px
-background-position: 50% 50%
-
-# Blogging
+- I'll be presenting on [Growing a Book in the Open: From Blog Post to O'Reilly Paperback](https://ww2.amstat.org/meetings/jsm/2018/onlineprogram/AbstractDetails.cfm?abstractid=326918)
 
 ---
 
-# Blogging
+class: inverse
 
-- Nobody is going to stop you from blogging about data science and/or statistics 
+
+background-image: url(images/giammarco-boscaro-378319-unsplash.jpg)
+background-size: cover
+
+# Where does this abstract belong?
 
 --
 
-- Blogging allows you to *practice* relevant skills
+- Term frequency and inverse document frequency
 
 --
 
-- Blogging offers opportunities for *community* and *feedback*
+- Topic modeling
+
+--
+
+- Text classification
+
+---
+
+class: inverse, right, middle
+
+# tf-idf
+<h1 class="fa fa-comments fa-fw"></h1>
+
+---
+
+### tf-idf
+
+- term frequency
+
+--
+
+- inverse document frequency
+
+--
+
+$$idf(\text{term}) = \ln{\left(\frac{n_{\text{documents}}}{n_{\text{documents containing term}}}\right)}$$
+
+---
+
+### tf-idf
+
+```{r}
+book_words <- austen_books() %>%
+  unnest_tokens(word, text) %>%
+  count(book, word, sort = TRUE)
+
+book_words
+```
+
+---
+
+```{r, echo=FALSE, fig.height=6}
+book_words %>%
+  group_by(book) %>%
+  mutate(total = sum(n)) %>%
+  ggplot(aes(n/total, fill = book)) +
+  geom_histogram(show.legend = FALSE) +
+  xlim(NA, 0.0009) +
+  facet_wrap(~book, ncol = 2, scales = "free_y")
+```
+
+---
+
+### tf-idf
+
+```{r}
+book_words %>%
+  bind_tf_idf(word, book, n)
+```
+
+---
+
+### tf-idf
+
+```{r}
+book_words %>%
+  bind_tf_idf(word, book, n) %>%
+  arrange(desc(tf_idf))              #<<
+```
+
+---
+
+```{r, echo=FALSE, fig.height=6}
+book_words %>%
+  bind_tf_idf(word, book, n) %>%
+  arrange(desc(tf_idf)) %>%
+  mutate(word = factor(word, levels = rev(unique(word)))) %>% 
+  group_by(book) %>% 
+  top_n(10) %>% 
+  ungroup %>%
+  ggplot(aes(word, tf_idf, fill = book)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = NULL, y = "tf-idf") +
+  facet_wrap(~book, ncol = 3, scales = "free") +
+  coord_flip()
+```
 
 ---
 
 class:center, middle
 
-background-image: url(images/cover_bookdown.jpg)
-background-size: 400px
+background-image: url(images/plot_tf_idf-1.png)
+background-size: 850px
 
 ---
 
-# Growing a book in the open
-
-- **March 2016** initial blog post
-
-- **April 2016** rOpenSci unconf, the beginning of tidytext, tidytext on CRAN
-
-- **July 2016** bookdown repo started
-
----
-
-class: inverse
-
-
-background-image: url(images/aaron-burden-126996-unsplash.jpg)
-background-size: cover
-
-# Collaboration
-
----
-
-# Growing a book in the open
-
-- **March 2016** initial blog post
-
-- **April 2016** rOpenSci unconf, the beginning of tidytext, tidytext on CRAN
-
-- **July 2016** bookdown repo started
-
-- **October 2016** we announced *Tidy Text Mining with R*
-
----
-
-class: inverse
-
-background-image: url(images/writing_life.jpg)
-background-size: 300px
-background-position: 18% 60%
-
-## Writing advice from Annie Dillard
-
----
 class: inverse, right, middle
 
-"One of the things I know about writing is this: spend it all, shoot it, play it, lose it, all, right away, every time.
-
---
-
-Do not hoard what seems good for a later place in the book or for another book; give it, give it all, give it now.
-
---
-
-## The impulse to save something good for a better place later is the signal to spend it now."
+# Tidying & casting
+<h1 class="fa fa-asterisk fa-fw"></h1>
 
 ---
+
+background-image: url(images/flowchart.png)
+background-size: 850px
+
+---
+
+# Topic modeling
+
+- Each document = mixture of topics
+
+--
+
+- Each topic = mixture of words
+
+---
+
+background-image: url(images/top_tags-1.png)
+background-size: 800px
+
+---
+
+background-image: url(images/stm_video.png)
+background-size: 850px
+---
+
 class: inverse, right, middle
 
-"Similarly, the impulse to keep to yourself what you have learned is not only shameful, it is destructive.
-
---
-
-## Anything you do not give freely and abundantly becomes lost to you. You open your safe and find ashes."
+# Text classification
+<h1 class="fa fa-balance-scale fa-fw"></h1>
 
 ---
 
-# Growing a book in the open
-
-- **March 2016** initial blog post
-
-- **April 2016** rOpenSci unconf, the beginning of tidytext, tidytext on CRAN
-
-- **July 2016** bookdown repo started
-
-- **October 2016** we announced *Tidy Text Mining with R*
-
---
-
-- **December 2016** signed agreement with O'Reilly
-
----
-
-# Why publish a book?
-
----
-
-background-image: url("https://media.giphy.com/media/12Eo7WogCAoj84/giphy.gif")
-background-size: 400px
+background-image: url("https://media.giphy.com/media/3KVyaAjplLyco/giphy.gif")
 background-position: 50% 50%
 
-
-# Why publish a book?
-
----
-
-# Why publish a book?
-
-- A technical book is **not** the most lucrative side project you can embark on
-
---
-
-- The gravitas of a "real" publisher may or may not be the right fit any individual
+# Text classification
 
 ---
 
-class: inverse, center, middle
+# Text classification
 
-# Then we had to actually submit a book
+Cast to a sparse matrix, and build a dataframe with a response variable
 
----
+```{r, eval=FALSE}
+sparse_words <- tidy_books %>%
+    count(document, word, sort = TRUE) %>%
+    cast_sparse(document, word, n)                  #<<
 
-background-image: url(images/darkness.png)
-background-size: 400px
-
----
-
-# Growing a book in the open
-
-- **March 2016** initial blog post
-
-- **April 2016** rOpenSci unconf, the beginning of tidytext, tidytext on CRAN
-
-- **July 2016** bookdown repo started
-
-- **October 2016** we announced *Tidy Text Mining with R*
-
-- **December 2016** signed agreement with O'Reilly
-
-- **April 2017** submitted final draft to O'Reilly
-
---
-
-- **July 2017** book published `r emo::ji("tada")`
+books_joined <- data_frame(document = as.integer(rownames(sparse_words))) %>%
+    left_join(books %>%
+                  select(document, title))
+```
 
 ---
 
+# Text classification
+
+Train a `glmnet()` model
+
+```{r, eval=FALSE}
+library(glmnet)
+library(doMC)
+registerDoMC(cores = 8)
+
+is_jane <- books_joined$title == "Pride and Prejudice"
+
+model <- cv.glmnet(sparse_words, is_jane, family = "binomial", 
+                   parallel = TRUE, keep = TRUE)
+```
+
+Tidy the model
+
+```{r, eval = FALSE}
+library(broom)
+
+coefs <- model$glmnet.fit %>%
+    tidy() %>%
+    tbl_df() %>%     ## filter to choose some lambda from glmnet output
+    filter(lambda == model$lambda.1se)
+
+Intercept <- coefs %>%
+    filter(term == "(Intercept)") %>%
+    pull(estimate)
+```
+
+---
+
+background-image: url(images/martians.png)
+background-size: 800px
+
+---
+
+background-image: url("https://media.giphy.com/media/y5dASMYqZwS2s/giphy.gif")
+background-position: 50% 50%
+background-size: 700px
+
+# Go explore real-world text!
+
+---
 class: inverse, left, middle
 
 # Thanks!

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Where does this abstract belong?</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Julia Silge | JSM 2018 | 29 July 2018" />
+    <link href="libs/remark-css/robot-fonts.css" rel="stylesheet" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/5235085b15.js"></script>
+    <link rel="stylesheet" href="css/tidytext.css" type="text/css" />
+    <link rel="stylesheet" href="css/discussant.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Where does this abstract belong?
+## <br><br><br><br>text mining and modeling for conference abstracts
+### Julia Silge | JSM 2018 | 29 July 2018
+
+---
+
+
+
+
+layout: true
+  
+&lt;div class="my-footer"&gt;&lt;span&gt;bit.ly/silge-jsm-text&lt;/span&gt;&lt;/div&gt; 
+
+---
+
+class: inverse, right, middle
+
+# Find me at...
+
+&lt;a href="http://twitter.com/juliasilge"&gt;&lt;i class="fa fa-twitter fa-fw"&gt;&lt;/i&gt;&amp;nbsp; @juliasilge&lt;/a&gt;&lt;br&gt;
+&lt;a href="http://github.com/juliasilge"&gt;&lt;i class="fa fa-github fa-fw"&gt;&lt;/i&gt;&amp;nbsp; @juliasilge&lt;/a&gt;&lt;br&gt;
+&lt;a href="https://juliasilge.com"&gt;&lt;i class="fa fa-link fa-fw"&gt;&lt;/i&gt;&amp;nbsp; juliasilge.com&lt;/a&gt;&lt;br&gt;
+&lt;a href="https://tidytextmining.com"&gt;&lt;i class="fa fa-book fa-fw"&gt;&lt;/i&gt;&amp;nbsp; tidytextmining.com&lt;/a&gt;&lt;br&gt;
+&lt;a href="mailto:julia.silge@gmail.com"&gt;&lt;i class="fa fa-paper-plane fa-fw"&gt;&lt;/i&gt;&amp;nbsp; julia.silge@gmail.com&lt;/a&gt;
+
+---
+
+background-image: url("https://media.giphy.com/media/F9DzQnxx6ZZNm/giphy.gif")
+background-position: 50% 50%
+
+# Thank you
+
+---
+
+class: inverse
+
+# Text in the real world
+
+--
+
+- Text data is increasingly important 📚
+
+--
+
+- NLP training is scarce on the ground 😱
+
+---
+
+background-image: url("https://media.giphy.com/media/l4JyY6IdblsismaeA/giphy.gif")
+background-position: 50% 50%
+background-size: 500px
+
+---
+
+class: center, middle
+
+background-image: url(images/tidytext.png)
+background-size: 500px
+
+---
+
+class: center, middle
+
+background-image: url(images/tidytext_repo.png)
+background-size: 900px
+
+---
+
+class:center, middle
+
+background-image: url(images/cover.png)
+background-size: 450px
+
+---
+
+# To learn more...
+
+- Check out ✨[tidytextmining.com](https://www.tidytextmining.com/)✨
+
+- Come to our Session 214 tomorrow (["Academic Publication Is Dead, Long Live Academic Publication"](https://ww2.amstat.org/meetings/jsm/2018/onlineprogram/ActivityDetails.cfm?SessionID=215035))
+
+- I'll be presenting on [Growing a Book in the Open: From Blog Post to O'Reilly Paperback](https://ww2.amstat.org/meetings/jsm/2018/onlineprogram/AbstractDetails.cfm?abstractid=326918)
+
+---
+
+class: inverse
+
+
+background-image: url(images/giammarco-boscaro-378319-unsplash.jpg)
+background-size: cover
+
+# Where does this abstract belong?
+
+--
+
+- Term frequency and inverse document frequency
+
+--
+
+- Topic modeling
+
+--
+
+- Text classification
+
+---
+
+class: inverse, right, middle
+
+# tf-idf
+&lt;h1 class="fa fa-comments fa-fw"&gt;&lt;/h1&gt;
+
+---
+
+### tf-idf
+
+- term frequency
+
+--
+
+- inverse document frequency
+
+--
+
+`$$idf(\text{term}) = \ln{\left(\frac{n_{\text{documents}}}{n_{\text{documents containing term}}}\right)}$$`
+
+---
+
+### tf-idf
+
+
+```r
+book_words &lt;- austen_books() %&gt;%
+  unnest_tokens(word, text) %&gt;%
+  count(book, word, sort = TRUE)
+
+book_words
+```
+
+```
+## # A tibble: 40,379 x 3
+##    book              word      n
+##    &lt;fct&gt;             &lt;chr&gt; &lt;int&gt;
+##  1 Mansfield Park    the    6206
+##  2 Mansfield Park    to     5475
+##  3 Mansfield Park    and    5438
+##  4 Emma              to     5239
+##  5 Emma              the    5201
+##  6 Emma              and    4896
+##  7 Mansfield Park    of     4778
+##  8 Pride &amp; Prejudice the    4331
+##  9 Emma              of     4291
+## 10 Pride &amp; Prejudice to     4162
+## # ... with 40,369 more rows
+```
+
+---
+
+![](text_mining_discuss_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+
+---
+
+### tf-idf
+
+
+```r
+book_words %&gt;%
+  bind_tf_idf(word, book, n)
+```
+
+```
+## # A tibble: 40,379 x 6
+##    book              word      n     tf   idf tf_idf
+##    &lt;fct&gt;             &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Mansfield Park    the    6206 0.0387     0      0
+##  2 Mansfield Park    to     5475 0.0341     0      0
+##  3 Mansfield Park    and    5438 0.0339     0      0
+##  4 Emma              to     5239 0.0325     0      0
+##  5 Emma              the    5201 0.0323     0      0
+##  6 Emma              and    4896 0.0304     0      0
+##  7 Mansfield Park    of     4778 0.0298     0      0
+##  8 Pride &amp; Prejudice the    4331 0.0354     0      0
+##  9 Emma              of     4291 0.0267     0      0
+## 10 Pride &amp; Prejudice to     4162 0.0341     0      0
+## # ... with 40,369 more rows
+```
+
+---
+
+### tf-idf
+
+
+```r
+book_words %&gt;%
+  bind_tf_idf(word, book, n) %&gt;%
+* arrange(desc(tf_idf))
+```
+
+```
+## # A tibble: 40,379 x 6
+##    book                word          n      tf   idf  tf_idf
+##    &lt;fct&gt;               &lt;chr&gt;     &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Sense &amp; Sensibility elinor      623 0.00519  1.79 0.00931
+##  2 Sense &amp; Sensibility marianne    492 0.00410  1.79 0.00735
+##  3 Mansfield Park      crawford    493 0.00307  1.79 0.00551
+##  4 Pride &amp; Prejudice   darcy       373 0.00305  1.79 0.00547
+##  5 Persuasion          elliot      254 0.00304  1.79 0.00544
+##  6 Emma                emma        786 0.00488  1.10 0.00536
+##  7 Northanger Abbey    tilney      196 0.00252  1.79 0.00452
+##  8 Emma                weston      389 0.00242  1.79 0.00433
+##  9 Pride &amp; Prejudice   bennet      294 0.00241  1.79 0.00431
+## 10 Persuasion          wentworth   191 0.00228  1.79 0.00409
+## # ... with 40,369 more rows
+```
+
+---
+
+![](text_mining_discuss_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+
+---
+
+class:center, middle
+
+background-image: url(images/plot_tf_idf-1.png)
+background-size: 850px
+
+---
+
+class: inverse, right, middle
+
+# Tidying &amp; casting
+&lt;h1 class="fa fa-asterisk fa-fw"&gt;&lt;/h1&gt;
+
+---
+
+background-image: url(images/flowchart.png)
+background-size: 850px
+
+---
+
+# Topic modeling
+
+- Each document = mixture of topics
+
+--
+
+- Each topic = mixture of words
+
+---
+
+background-image: url(images/top_tags-1.png)
+background-size: 800px
+
+---
+
+background-image: url(images/stm_video.png)
+background-size: 850px
+---
+
+class: inverse, right, middle
+
+# Text classification
+&lt;h1 class="fa fa-balance-scale fa-fw"&gt;&lt;/h1&gt;
+
+---
+
+background-image: url("https://media.giphy.com/media/3KVyaAjplLyco/giphy.gif")
+background-position: 50% 50%
+
+# Text classification
+
+---
+
+# Text classification
+
+Cast to a sparse matrix, and build a dataframe with a response variable
+
+
+```r
+sparse_words &lt;- tidy_books %&gt;%
+    count(document, word, sort = TRUE) %&gt;%
+*   cast_sparse(document, word, n)
+
+books_joined &lt;- data_frame(document = as.integer(rownames(sparse_words))) %&gt;%
+    left_join(books %&gt;%
+                  select(document, title))
+```
+
+---
+
+# Text classification
+
+Train a `glmnet()` model
+
+
+```r
+library(glmnet)
+library(doMC)
+registerDoMC(cores = 8)
+
+is_jane &lt;- books_joined$title == "Pride and Prejudice"
+
+model &lt;- cv.glmnet(sparse_words, is_jane, family = "binomial", 
+                   parallel = TRUE, keep = TRUE)
+```
+
+Tidy the model
+
+
+```r
+library(broom)
+
+coefs &lt;- model$glmnet.fit %&gt;%
+    tidy() %&gt;%
+    tbl_df() %&gt;%     ## filter to choose some lambda from glmnet output
+    filter(lambda == model$lambda.1se)
+
+Intercept &lt;- coefs %&gt;%
+    filter(term == "(Intercept)") %&gt;%
+    pull(estimate)
+```
+
+---
+
+background-image: url(images/martians.png)
+background-size: 800px
+
+---
+
+background-image: url("https://media.giphy.com/media/y5dASMYqZwS2s/giphy.gif")
+background-position: 50% 50%
+background-size: 700px
+
+# Go explore real-world text!
+
+---
+class: inverse, left, middle
+
+# Thanks!
+
+&lt;a href="http://twitter.com/juliasilge"&gt;&lt;i class="fa fa-twitter fa-fw"&gt;&lt;/i&gt;&amp;nbsp; @juliasilge&lt;/a&gt;&lt;br&gt;
+&lt;a href="http://github.com/juliasilge"&gt;&lt;i class="fa fa-github fa-fw"&gt;&lt;/i&gt;&amp;nbsp; @juliasilge&lt;/a&gt;&lt;br&gt;
+&lt;a href="https://juliasilge.com"&gt;&lt;i class="fa fa-link fa-fw"&gt;&lt;/i&gt;&amp;nbsp; juliasilge.com&lt;/a&gt;&lt;br&gt;
+&lt;a href="https://tidytextmining.com"&gt;&lt;i class="fa fa-book fa-fw"&gt;&lt;/i&gt;&amp;nbsp; tidytextmining.com&lt;/a&gt;&lt;br&gt;
+&lt;a href="mailto:julia.silge@gmail.com"&gt;&lt;i class="fa fa-paper-plane fa-fw"&gt;&lt;/i&gt;&amp;nbsp; julia.silge@gmail.com&lt;/a&gt;
+
+Slides created with the R package [**xaringan**](https://github.com/yihui/xaringan)
+
+Title slide photo by [Giammarco Boscaro](https://unsplash.com/photos/xLhKkk2tKkA) on [Unsplash](https://unsplash.com/)
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
