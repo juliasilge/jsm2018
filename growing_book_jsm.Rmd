@@ -1,10 +1,10 @@
 ---
 title: "Growing a book in the open"
-subtitle: "<br><br><br><br><br><br><br>from blog post to O'Reilly paperback"
+subtitle: "<br><br><br><br><br><br>from blog post to O'Reilly paperback"
 author: "Julia Silge | JSM 2018 | 30 July 2018"
 output:
   xaringan::moon_reader:
-    css: ["default", "robot-fonts", "css/growing.css", "css/tidytext.css"]
+    css: ["robot-fonts", "default", "css/tidytext.css", "css/growing.css"]
     lib_dir: libs
     nature:
       highlightStyle: github
@@ -47,6 +47,8 @@ class: inverse
 
 # In early 2016...
 
+--
+
 - I was interested in this so-called "data science"
 
 --
@@ -72,6 +74,7 @@ class: center, middle
 background-image: url("images/blog_screenshot.png")
 
 ---
+class: left
 
 background-image: url(images/austen_heatmap.png)
 background-size: 900px
@@ -98,11 +101,6 @@ class: center, middle
 
 background-image: url(images/tidytext.png)
 background-size: 500px
-
----
-class:center
-
-background-image: url(images/tidytext.png)
 
 ---
 class: center, middle
@@ -213,42 +211,6 @@ output:
 ```
 
 See the help page `?xaringan::moon_reader` for all possible options that you can use.
-
----
-
-# remark.js vs xaringan
-
-Some differences between using remark.js (left) and using **xaringan** (right):
-
-.pull-left[
-1. Start with a boilerplate HTML file;
-
-1. Plain Markdown;
-
-1. Write JavaScript to autoplay slides;
-
-1. Manually configure MathJax;
-
-1. Highlight code with `*`;
-
-1. Edit Markdown source and refresh browser to see updated slides;
-]
-
-.pull-right[
-1. Start with an R Markdown document;
-
-1. R Markdown (can embed R/other code chunks);
-
-1. Provide an option `autoplay`;
-
-1. MathJax just works;<sup>*</sup>
-
-1. Highlight code with `{{}}`;
-
-1. The RStudio addin "Infinite Moon Reader" automatically refreshes slides on changes;
-]
-
-.footnote[[*] Not really. See next page.]
 
 ---
 
@@ -448,89 +410,9 @@ ggplot(mtcars) +
 
 ---
 
-# CSS
+# Abstract
 
-Among all options in `xaringan::moon_reader`, the most challenging but perhaps also the most rewarding one is `css`, because it allows you to customize the appearance of your slides using any CSS rules or hacks you know.
-
-You can see the default CSS file [here](https://github.com/yihui/xaringan/blob/master/inst/rmarkdown/templates/xaringan/resources/default.css). You can completely replace it with your own CSS files, or define new rules to override the default. See the help page `?xaringan::moon_reader` for more information.
-
----
-
-# CSS
-
-For example, suppose you want to change the font for code from the default "Source Code Pro" to "Ubuntu Mono". You can create a CSS file named, say, `ubuntu-mono.css`:
-
-```css
-@import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
-
-.remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-```
-
-Then set the `css` option in the YAML metadata:
-
-```yaml
-output:
-  xaringan::moon_reader:
-    css: ["default", "ubuntu-mono.css"]
-```
-
-Here I assume `ubuntu-mono.css` is under the same directory as your Rmd.
-
-See [yihui/xaringan#83](https://github.com/yihui/xaringan/issues/83) for an example of using the [Fira Code](https://github.com/tonsky/FiraCode) font, which supports ligatures in program code.
-
----
-
-# Themes
-
-Don't want to learn CSS? Okay, you can use some user-contributed themes. A theme typically consists of two CSS files `foo.css` and `foo-fonts.css`, where `foo` is the theme name. Below are some existing themes:
-
-```{r}
-names(xaringan:::list_css())
-```
-
----
-
-# Themes
-
-To use a theme, you can specify the `css` option as an array of CSS filenames (without the `.css` extensions), e.g.,
-
-```yaml
-output:
-  xaringan::moon_reader:
-    css: [default, metropolis, metropolis-fonts]
-```
-
-If you want to contribute a theme to **xaringan**, please read [this blog post](https://yihui.name/en/2017/10/xaringan-themes).
-
----
-class: inverse, middle, center
-background-image: url(https://upload.wikimedia.org/wikipedia/commons/3/39/Naruto_Shiki_Fujin.svg)
-background-size: contain
-
-# Naruto
-
----
-background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg)
-background-size: 100px
-background-position: 90% 8%
-
-# Sharingan
-
-The R package name **xaringan** was derived<sup>1</sup> from **Sharingan**, a dōjutsu in the Japanese anime _Naruto_ with two abilities:
-
-- the "Eye of Insight"
-
-- the "Eye of Hypnotism"
-
-I think a presentation is basically a way to communicate insights to the audience, and a great presentation may even "hypnotize" the audience.<sup>2,3</sup>
-
-.footnote[
-[1] In Chinese, the pronounciation of _X_ is _Sh_ /ʃ/ (as in _shrimp_). Now you should have a better idea of how to pronounce my last name _Xie_.
-
-[2] By comparison, bad presentations only put the audience to sleep.
-
-[3] Personally I find that setting background images for slides is a killer feature of remark.js. It is an effective way to bring visual impact into your presentations.
-]
+Blogging as a communication medium is egalitarian, easy to get started in, and, compared to many ways that statistics and data science practitioners can share their work, remarkably free of gatekeeping. No one is going to stop you from doing it, for better or worse. During this panel, I will share my own experience of using a blog as part of my career transition into data science and as a medium for gradually bootstrapping a project into a full book, written in the open using the bookdown package for R. This project grew from an initial blog post to a final result that is the largest single piece of work I’ve completed since my PhD dissertation; the story along the way involves the creation of open source software, the growth of productive professional relationships, and some perspective on why and how to share statistical computing work in our broader community.
 
 ---
 
