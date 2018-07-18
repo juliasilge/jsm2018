@@ -220,11 +220,11 @@ background-position: 50% 50%
 
 --
 
-- Blogging allows you to *practice* relevant skills
+- Blogging allows you to **practice** relevant skills
 
 --
 
-- Blogging offers opportunities for *community* and *feedback*
+- Blogging offers opportunities for **community** and **feedback**
 
 ---
 
