@@ -1,0 +1,385 @@
+---
+title: "Which session should this go to?"
+subtitle: "<br><br><br><br><br><br>text mining and modeling for conference abstracts"
+author: "Julia Silge | JSM 2018 | 29 July 2018"
+output:
+  xaringan::moon_reader:
+    css: ["robot-fonts", "default", "css/tidytext.css", "css/discussant.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+    includes:
+      in_header: header.html
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(tidyverse)
+library(knitr)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
+                      dpi = 300, cache.lazy = FALSE,
+                      fig.cap = "")
+theme_set(silgelib::theme_roboto())
+```
+
+layout: true
+  
+<div class="my-footer"><span>bit.ly/silge-jsm-text</span></div> 
+
+---
+
+class: inverse, right, middle
+
+# Find me at...
+
+<a href="http://twitter.com/juliasilge"><i class="fa fa-twitter fa-fw"></i>&nbsp; @juliasilge</a><br>
+<a href="http://github.com/juliasilge"><i class="fa fa-github fa-fw"></i>&nbsp; @juliasilge</a><br>
+<a href="https://juliasilge.com"><i class="fa fa-link fa-fw"></i>&nbsp; juliasilge.com</a><br>
+<a href="https://tidytextmining.com"><i class="fa fa-book fa-fw"></i>&nbsp; tidytextmining.com</a><br>
+<a href="mailto:julia.silge@gmail.com"><i class="fa fa-paper-plane fa-fw"></i>&nbsp; julia.silge@gmail.com</a>
+
+---
+
+background-image: url("https://media.giphy.com/media/F9DzQnxx6ZZNm/giphy.gif")
+background-position: 50% 50%
+
+# Thank you
+
+---
+
+class: inverse
+
+# In early 2016...
+
+--
+
+- I was interested in this so-called "data science"
+
+--
+
+- I was pretty sure no one would hire me
+
+--
+
+- I needed a `r emo::ji("sparkles")`portfolio`r emo::ji("sparkles")`
+
+---
+
+background-image: url("https://media.giphy.com/media/4FgvzqQXhG3eM/giphy.gif")
+background-size: 450px
+background-position: 50% 50%
+
+# Write what you know
+
+---
+
+class: center, middle
+
+background-image: url("images/blog_screenshot.png")
+
+---
+class: left
+
+background-image: url(images/austen_heatmap.png)
+background-size: 900px
+background-position: 50% 50%
+
+# Text mining and Jane Austen
+
+---
+
+class: inverse, center, middle
+
+# In July 2017...
+
+---
+
+class:center, middle
+
+background-image: url(images/cover.png)
+background-size: 450px
+
+---
+
+# To learn more...
+
+- Check out [tidytextmining.com](https://www.tidytextmining.com/) `r emo::ji("tada")`
+- Come to our Session 214 tomorrow (["Academic Publication Is Dead, Long Live Academic Publication"](https://ww2.amstat.org/meetings/jsm/2018/onlineprogram/ActivityDetails.cfm?SessionID=215035))
+- I'll be presenting on [Growing a Book in the Open: From Blog Post to O'Reilly Paperback](https://ww2.amstat.org/meetings/jsm/2018/onlineprogram/AbstractDetails.cfm?abstractid=326918)
+
+---
+
+class:center, middle
+
+background-image: url(images/ropensci_tweet.png)
+background-size: 600px
+
+---
+
+# Unnest tokens to tidy text
+
+```{r}
+library(tidytext)
+
+tidy_books <- janeaustenr::austen_books() %>%
+  unnest_tokens(word, text) 
+
+tidy_books %>%
+  anti_join(stop_words) %>%
+  count(word, sort = TRUE)
+```
+---
+
+# Tidy a document-term matrix
+
+```{r echo=FALSE}
+library(tm)
+data("AssociatedPress", package = "topicmodels")
+```
+
+
+```{r}
+comparison <- tidy(AssociatedPress) %>%
+  count(word = term) %>%
+  rename(AP = n) %>%
+  inner_join(count(tidy_books, word)) %>%
+  rename(Austen = n) %>%
+  mutate(AP = AP / sum(AP),
+         Austen = Austen / sum(Austen))
+
+comparison
+```
+
+---
+
+```{r, echo=FALSE, dpi=300, fig.height=6}
+comparison %>%
+  anti_join(get_stopwords()) %>%
+  ggplot(aes(AP, Austen)) +
+  geom_point(alpha = 0.5) +
+  geom_text(aes(label = word), check_overlap = TRUE,
+            vjust = 1, hjust = 1, family = "RobotoCondensed-Regular") +
+  scale_x_log10(labels = scales::percent_format()) +
+  scale_y_log10(labels = scales::percent_format()) +
+  geom_abline(color = "red")
+```
+
+
+---
+
+class: center, middle
+
+background-image: url(images/tidytext.png)
+background-size: 500px
+
+---
+
+class: center, middle
+
+background-image: url(images/tidytext_repo.png)
+background-size: 900px
+
+---
+
+# Growing a book in the open
+
+- **March 2016** initial blog post
+
+- **April 2016** rOpenSci unconf, the beginning of tidytext, tidytext on CRAN
+
+---
+
+background-image: url("https://media.giphy.com/media/iSrYjghqHhRJu/giphy.gif")
+background-size: 500px
+background-position: 50% 50%
+
+# Blogging
+
+---
+
+# Blogging
+
+- Nobody is going to stop you from blogging about data science and/or statistics 
+
+---
+
+background-image: url("https://media.giphy.com/media/hpEzeWC2Pbrag/giphy.gif")
+background-size: 400px
+background-position: 50% 50%
+
+# Blogging
+
+---
+
+# Blogging
+
+- Nobody is going to stop you from blogging about data science and/or statistics 
+
+--
+
+- Blogging allows you to *practice* relevant skills
+
+--
+
+- Blogging offers opportunities for *community* and *feedback*
+
+---
+
+class:center, middle
+
+background-image: url(images/cover_bookdown.jpg)
+background-size: 400px
+
+---
+
+# Growing a book in the open
+
+- **March 2016** initial blog post
+
+- **April 2016** rOpenSci unconf, the beginning of tidytext, tidytext on CRAN
+
+- **July 2016** bookdown repo started
+
+---
+
+class: inverse
+
+
+background-image: url(images/aaron-burden-126996-unsplash.jpg)
+background-size: cover
+
+# Collaboration
+
+---
+
+# Growing a book in the open
+
+- **March 2016** initial blog post
+
+- **April 2016** rOpenSci unconf, the beginning of tidytext, tidytext on CRAN
+
+- **July 2016** bookdown repo started
+
+- **October 2016** we announced *Tidy Text Mining with R*
+
+---
+
+class: inverse
+
+background-image: url(images/writing_life.jpg)
+background-size: 300px
+background-position: 18% 60%
+
+## Writing advice from Annie Dillard
+
+---
+class: inverse, right, middle
+
+"One of the things I know about writing is this: spend it all, shoot it, play it, lose it, all, right away, every time.
+
+--
+
+Do not hoard what seems good for a later place in the book or for another book; give it, give it all, give it now.
+
+--
+
+## The impulse to save something good for a better place later is the signal to spend it now."
+
+---
+class: inverse, right, middle
+
+"Similarly, the impulse to keep to yourself what you have learned is not only shameful, it is destructive.
+
+--
+
+## Anything you do not give freely and abundantly becomes lost to you. You open your safe and find ashes."
+
+---
+
+# Growing a book in the open
+
+- **March 2016** initial blog post
+
+- **April 2016** rOpenSci unconf, the beginning of tidytext, tidytext on CRAN
+
+- **July 2016** bookdown repo started
+
+- **October 2016** we announced *Tidy Text Mining with R*
+
+--
+
+- **December 2016** signed agreement with O'Reilly
+
+---
+
+# Why publish a book?
+
+---
+
+background-image: url("https://media.giphy.com/media/12Eo7WogCAoj84/giphy.gif")
+background-size: 400px
+background-position: 50% 50%
+
+
+# Why publish a book?
+
+---
+
+# Why publish a book?
+
+- A technical book is **not** the most lucrative side project you can embark on
+
+--
+
+- The gravitas of a "real" publisher may or may not be the right fit any individual
+
+---
+
+class: inverse, center, middle
+
+# Then we had to actually submit a book
+
+---
+
+background-image: url(images/darkness.png)
+background-size: 400px
+
+---
+
+# Growing a book in the open
+
+- **March 2016** initial blog post
+
+- **April 2016** rOpenSci unconf, the beginning of tidytext, tidytext on CRAN
+
+- **July 2016** bookdown repo started
+
+- **October 2016** we announced *Tidy Text Mining with R*
+
+- **December 2016** signed agreement with O'Reilly
+
+- **April 2017** submitted final draft to O'Reilly
+
+--
+
+- **July 2017** book published `r emo::ji("tada")`
+
+---
+
+class: inverse, left, middle
+
+# Thanks!
+
+<a href="http://twitter.com/juliasilge"><i class="fa fa-twitter fa-fw"></i>&nbsp; @juliasilge</a><br>
+<a href="http://github.com/juliasilge"><i class="fa fa-github fa-fw"></i>&nbsp; @juliasilge</a><br>
+<a href="https://juliasilge.com"><i class="fa fa-link fa-fw"></i>&nbsp; juliasilge.com</a><br>
+<a href="https://tidytextmining.com"><i class="fa fa-book fa-fw"></i>&nbsp; tidytextmining.com</a><br>
+<a href="mailto:julia.silge@gmail.com"><i class="fa fa-paper-plane fa-fw"></i>&nbsp; julia.silge@gmail.com</a>
+
+Slides created with the R package [**xaringan**](https://github.com/yihui/xaringan)
+
+Title slide photo by [Giammarco Boscaro](https://unsplash.com/photos/xLhKkk2tKkA) on [Unsplash](https://unsplash.com/)
+
+
