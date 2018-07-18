@@ -102,403 +102,283 @@ background-size: 450px
 
 ---
 
+class:center, middle
+
+background-image: url(images/ropensci_tweet.png)
+background-size: 600px
+
+---
+
+# Unnest tokens to tidy text
+
+
+```r
+library(tidytext)
+
+tidy_books &lt;- janeaustenr::austen_books() %&gt;%
+  unnest_tokens(word, text) 
+
+tidy_books %&gt;%
+  anti_join(stop_words) %&gt;%
+  count(word, sort = TRUE)
+```
+
+```
+## # A tibble: 13,914 x 2
+##    word       n
+##    &lt;chr&gt;  &lt;int&gt;
+##  1 miss    1855
+##  2 time    1337
+##  3 fanny    862
+##  4 dear     822
+##  5 lady     817
+##  6 sir      806
+##  7 day      797
+##  8 emma     787
+##  9 sister   727
+## 10 house    699
+## # ... with 13,904 more rows
+```
+---
+
+# Tidy a document-term matrix
+
+
+
+
+
+```r
+comparison &lt;- tidy(AssociatedPress) %&gt;%
+  count(word = term) %&gt;%
+  rename(AP = n) %&gt;%
+  inner_join(count(tidy_books, word)) %&gt;%
+  rename(Austen = n) %&gt;%
+  mutate(AP = AP / sum(AP),
+         Austen = Austen / sum(Austen))
+
+comparison
+```
+
+```
+## # A tibble: 4,735 x 3
+##    word             AP     Austen
+##    &lt;chr&gt;         &lt;dbl&gt;      &lt;dbl&gt;
+##  1 abandoned 0.000169  0.00000461
+##  2 abide     0.0000289 0.0000184 
+##  3 abilities 0.0000289 0.000134  
+##  4 ability   0.000236  0.0000138 
+##  5 able      0.000661  0.00141   
+##  6 abroad    0.000193  0.000166  
+##  7 abrupt    0.0000289 0.0000230 
+##  8 absence   0.0000772 0.000511  
+##  9 absent    0.0000434 0.000230  
+## 10 absolute  0.0000531 0.000120  
+## # ... with 4,725 more rows
+```
+
+---
+
+![](growing_book_jsm_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+
+
+---
+
 class: center, middle
 
 background-image: url(images/tidytext.png)
 background-size: 500px
 
 ---
+
 class: center, middle
 
-# xaringan
-
-### /ʃæ.'riŋ.ɡæn/
+background-image: url(images/tidytext_repo.png)
+background-size: 900px
 
 ---
+
+# Growing a book in the open
+
+- **March 2016** initial blog post
+
+- **April 2016** rOpenSci unconf, the beginning of tidytext, tidytext on CRAN
+
+---
+
+background-image: url("https://media.giphy.com/media/iSrYjghqHhRJu/giphy.gif")
+background-size: 500px
+background-position: 50% 50%
+
+# Blogging
+
+---
+
+# Blogging
+
+- Nobody is going to stop you from blogging about data science and/or statistics 
+
+---
+
+background-image: url("https://media.giphy.com/media/hpEzeWC2Pbrag/giphy.gif")
+background-size: 400px
+background-position: 50% 50%
+
+# Blogging
+
+---
+
+# Blogging
+
+- Nobody is going to stop you from blogging about data science and/or statistics 
+
+--
+
+- Blogging allows you to *practice* relevant skills
+
+--
+
+- Blogging offers opportunities for *community* and *feedback*
+
+---
+
+class:center, middle
+
+background-image: url(images/cover_bookdown.jpg)
+background-size: 400px
+
+---
+
+# Growing a book in the open
+
+- **March 2016** initial blog post
+
+- **April 2016** rOpenSci unconf, the beginning of tidytext, tidytext on CRAN
+
+- **July 2016** bookdown repo started
+
+---
+
+class: inverse
+
+
+background-image: url(images/aaron-burden-126996-unsplash.jpg)
+background-size: cover
+
+# Collaboration
+
+---
+
+# Growing a book in the open
+
+- **March 2016** initial blog post
+
+- **April 2016** rOpenSci unconf, the beginning of tidytext, tidytext on CRAN
+
+- **July 2016** bookdown repo started
+
+- **October 2016** we announced *Tidy Text Mining with R*
+
+---
+
+class: inverse
+
+background-image: url(images/writing_life.jpg)
+background-size: 300px
+background-position: 18% 60%
+
+## Writing advice from Annie Dillard
+
+---
+class: inverse, right, middle
+
+"One of the things I know about writing is this: spend it all, shoot it, play it, lose it, all, right away, every time.
+
+--
+
+Do not hoard what seems good for a later place in the book or for another book; give it, give it all, give it now.
+
+--
+
+## The impulse to save something good for a better place later is the signal to spend it now."
+
+---
+class: inverse, right, middle
+
+"Similarly, the impulse to keep to yourself what you have learned is not only shameful, it is destructive.
+
+--
+
+## Anything you do not give freely and abundantly becomes lost to you. You open your safe and find ashes."
+
+---
+
+# Growing a book in the open
+
+- **March 2016** initial blog post
+
+- **April 2016** rOpenSci unconf, the beginning of tidytext, tidytext on CRAN
+
+- **July 2016** bookdown repo started
+
+- **October 2016** we announced *Tidy Text Mining with R*
+
+--
+
+- **December 2016** signed agreement with O'Reilly
+
+---
+
+# Why publish a book?
+
+---
+
+background-image: url("https://media.giphy.com/media/12Eo7WogCAoj84/giphy.gif")
+background-size: 400px
+background-position: 50% 50%
+
+
+# Why publish a book?
+
+---
+
+# Why publish a book?
+
+- A technical book is **not** the most lucrative side project you can embark on
+
+--
+
+- The gravitas of a "real" publisher may or may not be the right fit any individual
+
+---
+
 class: inverse, center, middle
 
-# Get Started
+# Then we had to actually submit a book
 
 ---
 
-# Hello World
+background-image: url(images/darkness.png)
+background-size: 400px
 
-Install the **xaringan** package from [Github](https://github.com/yihui/xaringan):
+---
 
+# Growing a book in the open
 
-```r
-devtools::install_github("yihui/xaringan")
-```
+- **March 2016** initial blog post
+
+- **April 2016** rOpenSci unconf, the beginning of tidytext, tidytext on CRAN
+
+- **July 2016** bookdown repo started
+
+- **October 2016** we announced *Tidy Text Mining with R*
+
+- **December 2016** signed agreement with O'Reilly
+
+- **April 2017** submitted final draft to O'Reilly
 
 --
 
-You are recommended to use the [RStudio IDE](https://www.rstudio.com/products/rstudio/), but you do not have to.
-
-- Create a new R Markdown document from the menu `File -&gt; New File -&gt; R Markdown -&gt; From Template -&gt; Ninja Presentation`;&lt;sup&gt;1&lt;/sup&gt;
-
---
-
-- Click the `Knit` button to compile it;
-
---
-
-- or use the [RStudio Addin](https://rstudio.github.io/rstudioaddins/)&lt;sup&gt;2&lt;/sup&gt; "Infinite Moon Reader" to live preview the slides (every time you update and save the Rmd document, the slides will be automatically reloaded in RStudio Viewer.
-
-.footnote[
-[1] 中文用户请看[这份教程](http://slides.yihui.name/xaringan/zh-CN.html)
-
-[2] See [#2](https://github.com/yihui/xaringan/issues/2) if you do not see the template or addin in RStudio.
-]
-
----
-background-image: url(https://github.com/yihui/xaringan/releases/download/v0.0.2/karl-moustache.jpg)
-background-position: 50% 50%
-class: center, bottom, inverse
-
-# You only live once!
-
----
-
-# Hello Ninja
-
-As a presentation ninja, you certainly should not be satisfied by the "Hello World" example. You need to understand more about two things:
-
-1. The [remark.js](https://remarkjs.com) library;
-
-1. The **xaringan** package;
-
-Basically **xaringan** injected the chakra of R Markdown (minus Pandoc) into **remark.js**. The slides are rendered by remark.js in the web browser, and the Markdown source needed by remark.js is generated from R Markdown (**knitr**).
-
----
-
-# remark.js
-
-You can see an introduction of remark.js from [its homepage](https://remarkjs.com). You should read the [remark.js Wiki](https://github.com/gnab/remark/wiki) at least once to know how to
-
-- create a new slide (Markdown syntax&lt;sup&gt;*&lt;/sup&gt; and slide properties);
-
-- format a slide (e.g. text alignment);
-
-- configure the slideshow;
-
-- and use the presentation (keyboard shortcuts).
-
-It is important to be familiar with remark.js before you can understand the options in **xaringan**.
-
-.footnote[[*] It is different with Pandoc's Markdown! It is limited but should be enough for presentation purposes. Come on... You do not need a slide for the Table of Contents! Well, the Markdown support in remark.js [may be improved](https://github.com/gnab/remark/issues/142) in the future.]
-
----
-background-image: url(https://github.com/yihui/xaringan/releases/download/v0.0.2/karl-moustache.jpg)
-background-size: cover
-class: center, bottom, inverse
-
-# I was so happy to have discovered remark.js!
-
----
-class: inverse, middle, center
-
-# Using xaringan
-
----
-
-# xaringan
-
-Provides an R Markdown output format `xaringan::moon_reader` as a wrapper for remark.js, and you can use it in the YAML metadata, e.g.
-
-```yaml
----
-title: "A Cool Presentation"
-output:
-  xaringan::moon_reader
-    yolo: true
-    nature:
-      autoplay: 30000
----
-```
-
-See the help page `?xaringan::moon_reader` for all possible options that you can use.
-
----
-
-# Math Expressions
-
-You can write LaTeX math expressions inside a pair of dollar signs, e.g. &amp;#36;\alpha+\beta$ renders `\(\alpha+\beta\)`. You can use the display style with double dollar signs:
-
-```
-$$\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$$
-```
-
-`$$\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$$`
-
-Limitations:
-
-1. The source code of a LaTeX math expression must be in one line, unless it is inside a pair of double dollar signs, in which case the starting `$$` must appear in the very beginning of a line, followed immediately by a non-space character, and the ending `$$` must be at the end of a line, led by a non-space character;
-
-1. There should not be spaces after the opening `$` or before the closing `$`.
-
-1. Math does not work on the title slide (see [#61](https://github.com/yihui/xaringan/issues/61) for a workaround).
-
----
-
-# R Code
-
-
-```r
-# a boring regression
-fit = lm(dist ~ 1 + speed, data = cars)
-coef(summary(fit))
-```
-
-```
-#               Estimate Std. Error   t value     Pr(&gt;|t|)
-# (Intercept) -17.579095  6.7584402 -2.601058 1.231882e-02
-# speed         3.932409  0.4155128  9.463990 1.489836e-12
-```
-
-```r
-dojutsu = c('地爆天星', '天照', '加具土命', '神威', '須佐能乎', '無限月読')
-grep('天', dojutsu, value = TRUE)
-```
-
-```
-# [1] "地爆天星" "天照"
-```
-
----
-
-# R Plots
-
-
-```r
-par(mar = c(4, 4, 1, .1))
-plot(cars, pch = 19, col = 'darkgray', las = 1)
-abline(fit, lwd = 2)
-```
-
-![](growing_book_jsm_files/figure-html/cars-1.svg)&lt;!-- --&gt;
-
----
-
-# Tables
-
-If you want to generate a table, make sure it is in the HTML format (instead of Markdown or other formats), e.g.,
-
-
-```r
-knitr::kable(head(iris), format = 'html')
-```
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:right;"&gt; Sepal.Length &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Sepal.Width &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Petal.Length &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Petal.Width &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; Species &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5.1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4.9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4.7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.4 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
----
-
-# Some Tips
-
-- There are several ways to build incremental slides. See [this presentation](https://slides.yihui.name/xaringan/incremental.html) for examples.
-
-- The option `highlightLines: true` of `nature` will highlight code lines that start with `*`, or are wrapped in `{{ }}`, or have trailing comments `#&lt;&lt;`;
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        nature:
-          highlightLines: true
-    ```
-
-    See examples on the next page.
-
----
-
-# Some Tips
-
-
-.pull-left[
-An example using a leading `*`:
-
-    ```r
-    if (TRUE) {
-    ** message("Very important!")
-    }
-    ```
-Output:
-```r
-if (TRUE) {
-* message("Very important!")
-}
-```
-
-This is invalid R code, so it is a plain fenced code block that is not executed.
-]
-
-.pull-right[
-An example using `{{}}`:
-
-    ```{r tidy=FALSE}
-    if (TRUE) {
-    *{{ message("Very important!") }}
-    }
-    ```
-Output:
-
-```r
-if (TRUE) {
-* message("Very important!") 
-}
-```
-
-```
-## Very important!
-```
-
-It is valid R code so you can run it. Note that `{{}}` can wrap an R expression of multiple lines.
-]
-
----
-
-# Some Tips
-
-An example of using the trailing comment `#&lt;&lt;` to highlight lines:
-
-````markdown
-```{r tidy=FALSE}
-library(ggplot2)
-ggplot(mtcars) + 
-  aes(mpg, disp) + 
-  geom_point() +   #&lt;&lt;
-  geom_smooth()    #&lt;&lt;
-```
-````
-
-Output:
-
-
-```r
-library(ggplot2)
-ggplot(mtcars) + 
-  aes(mpg, disp) + 
-* geom_point() +
-* geom_smooth()
-```
-
----
-
-# Some Tips
-
-- To make slides work offline, you need to download a copy of remark.js in advance, because **xaringan** uses the online version by default (see the help page `?xaringan::moon_reader`).
-
-- You can use `xaringan::summon_remark()` to download the latest or a specified version of remark.js. By default, it is downloaded to `libs/remark-latest.min.js`.
-
-- Then change the `chakra` option in YAML to point to this file, e.g.
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        chakra: libs/remark-latest.min.js
-    ```
-
-- If you used Google fonts in slides (the default theme uses _Yanone Kaffeesatz_, _Droid Serif_, and _Source Code Pro_), they won't work offline unless you download or install them locally. The Heroku app [google-webfonts-helper](https://google-webfonts-helper.herokuapp.com/fonts) can help you download fonts and generate the necessary CSS.
-
----
-
-# Macros
-
-- remark.js [allows users to define custom macros](https://github.com/yihui/xaringan/issues/80) (JS functions) that can be applied to Markdown text using the syntax `![:macroName arg1, arg2, ...]` or `![:macroName arg1, arg2, ...](this)`. For example, before remark.js initializes the slides, you can define a macro named `scale`:
-
-    ```js
-    remark.macros.scale = function (percentage) {
-      var url = this;
-      return '&lt;img src="' + url + '" style="width: ' + percentage + '" /&gt;';
-    };
-    ```
-
-    Then the Markdown text
-
-    ```markdown
-    ![:scale 50%](image.jpg)
-    ```
-
-    will be translated to
-    
-    ```html
-    &lt;img src="image.jpg" style="width: 50%" /&gt;
-    ```
-
----
-
-# Macros (continued)
-
-- To insert macros in **xaringan** slides, you can use the option `beforeInit` under the option `nature`, e.g.,
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        nature:
-          beforeInit: "macros.js"
-    ```
-
-    You save your remark.js macros in the file `macros.js`.
-
-- The `beforeInit` option can be used to insert arbitrary JS code before `remark.create()`. Inserting macros is just one of its possible applications.
-
----
-
-# Abstract
-
-Blogging as a communication medium is egalitarian, easy to get started in, and, compared to many ways that statistics and data science practitioners can share their work, remarkably free of gatekeeping. No one is going to stop you from doing it, for better or worse. During this panel, I will share my own experience of using a blog as part of my career transition into data science and as a medium for gradually bootstrapping a project into a full book, written in the open using the bookdown package for R. This project grew from an initial blog post to a final result that is the largest single piece of work I’ve completed since my PhD dissertation; the story along the way involves the creation of open source software, the growth of productive professional relationships, and some perspective on why and how to share statistical computing work in our broader community.
+- **July 2017** book published 🎉
 
 ---
 

@@ -4,15 +4,15 @@
 
 h1, h2, h3 {
   font-weight: normal;
-  color: #168880;
+  color: #51A6A2;
 }
 a, a > code {
-  color: #302D74;
+  color: #0C7169;
 }
 .remark-code-line-highlighted { background-color: rgba(48, 45, 116, 0.3); }
 
 .inverse {
-  background-color: #126269;
+  background-color: #0E857D;
 }
 .inverse, .inverse h1, .inverse h2, .inverse h3, .inverse a, inverse a > code {
   color: #fff;
@@ -23,7 +23,7 @@ a, a > code {
 }
 
 div.my-footer {
-    background-color: #272822;
+    background-color: #232b2b;
     position: absolute;
     bottom: 0px;
     left: 0px;
