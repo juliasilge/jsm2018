@@ -43,6 +43,14 @@ class: inverse, right, middle
 
 ---
 
+background-image: url(images/not-a-robot.png)
+background-size: 750px
+background-position: 50% 30%
+
+# Are you a robot?
+
+---
+
 background-image: url("https://media.giphy.com/media/F9DzQnxx6ZZNm/giphy.gif")
 background-position: 50% 50%
 
