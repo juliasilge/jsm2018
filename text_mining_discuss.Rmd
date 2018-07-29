@@ -17,6 +17,7 @@ output:
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 library(tidyverse)
+library(tidytext)
 library(janeaustenr)
 library(knitr)
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
@@ -51,7 +52,7 @@ background-position: 50% 30%
 
 ---
 
-background-image: url("https://media.giphy.com/media/F9DzQnxx6ZZNm/giphy.gif")
+background-image: url(images/greatjob.gif)
 background-position: 50% 50%
 
 # Thank you
@@ -72,9 +73,15 @@ class: inverse
 
 ---
 
-background-image: url("https://media.giphy.com/media/l4JyY6IdblsismaeA/giphy.gif")
+background-image: url(images/cant_even.gif)
 background-position: 50% 50%
-background-size: 500px
+background-size: 600px
+
+---
+
+background-image: url(images/vexing.gif)
+background-position: 50% 50%
+background-size: 600px
 
 ---
 
@@ -257,7 +264,8 @@ class: inverse, right, middle
 
 ---
 
-background-image: url("https://media.giphy.com/media/3KVyaAjplLyco/giphy.gif")
+background-image: url(images/darcysoawkward.gif)
+background-size: 600px
 background-position: 50% 50%
 
 # Text classification
@@ -317,7 +325,7 @@ background-size: 800px
 
 ---
 
-background-image: url("https://media.giphy.com/media/y5dASMYqZwS2s/giphy.gif")
+background-image: url(images/lizzieskipping.gif)
 background-position: 50% 50%
 background-size: 700px
 
