@@ -59,7 +59,7 @@ background-position: 50% 30%
 
 ---
 
-background-image: url("https://media.giphy.com/media/lWsV8EfJJuF1u/giphy.gif")
+background-image: url(images/shedoesntgohere.gif)
 background-position: 50% 50%
 
 # Who am I?
@@ -84,8 +84,8 @@ class: inverse
 
 ---
 
-background-image: url("https://media.giphy.com/media/4FgvzqQXhG3eM/giphy.gif")
-background-size: 450px
+background-image: url(images/prideandprejudice.gif)
+background-size: 700px
 background-position: 50% 50%
 
 # Write what you know
@@ -200,7 +200,7 @@ background-size: 900px
 
 ---
 
-background-image: url("https://media.giphy.com/media/iSrYjghqHhRJu/giphy.gif")
+background-image: url(images/heatedblogs.gif)
 background-size: 500px
 background-position: 50% 50%
 
@@ -214,7 +214,7 @@ background-position: 50% 50%
 
 ---
 
-background-image: url("https://media.giphy.com/media/hpEzeWC2Pbrag/giphy.gif")
+background-image: url(images/saynotohorse.gif)
 background-size: 400px
 background-position: 50% 50%
 
@@ -336,7 +336,7 @@ Similarly, the impulse to keep to yourself what you have learned is not only sha
 
 ---
 
-background-image: url("https://media.giphy.com/media/12Eo7WogCAoj84/giphy.gif")
+background-image: url(images/money.gif)
 background-size: 400px
 background-position: 50% 50%
 
